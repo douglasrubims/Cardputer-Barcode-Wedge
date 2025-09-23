@@ -49,10 +49,63 @@ This allows you to test barcode input fields in POS software, ERP systems, or an
   - Libraries: [M5Cardputer](https://github.com/m5stack/M5Cardputer), [M5Unified](https://github.com/m5stack/M5Unified), [M5GFX](https://github.com/m5stack/M5GFX)
 
 ### Upload
+
+#### Option 1: Arduino IDE
 1. Clone this repository.
-2. Open `main.ino` in Arduino IDE.
+2. Open `Cardputer-Barcode-Wedge.ino` in Arduino IDE.
 3. Select **M5Cardputer** as board and enable **USB CDC On Boot**.
 4. Upload to the Cardputer via USB-C.
+
+#### Option 2: Arduino CLI (Command Line)
+1. Install [Arduino CLI](https://arduino.github.io/arduino-cli/).
+2. Install ESP32 board support:
+   ```bash
+   arduino-cli core install esp32:esp32
+   ```
+3. Install required libraries:
+   ```bash
+   arduino-cli lib install "M5Cardputer"
+   arduino-cli lib install "M5Unified"
+   arduino-cli lib install "M5GFX"
+   ```
+4. Use the provided makefile for easy compilation and upload:
+   ```bash
+   # Compile the project
+   make compile
+   
+   # Upload to device (adjust PORT in makefile if needed)
+   make upload
+   
+   # Compile and upload in one command
+   make all
+   
+   # Open serial monitor
+   make monitor
+   
+   # Clean build files
+   make clean
+   
+   # Show available commands
+   make help
+   ```
+
+   **Note**: Update the `PORT` variable in the makefile to match your device's serial port (e.g., `/dev/cu.usbmodem11301` on macOS, `COM3` on Windows).
+
+#### Makefile Configuration
+The project includes a makefile with the following configurable variables:
+- `PROJECT_NAME`: Project name (Cardputer-Barcode-Wedge)
+- `FQBN`: Fully Qualified Board Name (esp32:esp32:m5stack_cardputer)
+- `PORT`: Serial port for uploads (adjust for your system)
+- `BAUD`: Serial monitor baud rate (115200)
+- `SRC_DIR`: Source directory (current directory)
+
+Available makefile targets:
+- `all`: Compile and upload in sequence
+- `compile`: Compile the Arduino sketch
+- `upload`: Upload compiled binary to device
+- `monitor`: Open serial monitor
+- `clean`: Remove build artifacts
+- `help`: Show available commands
 
 ---
 
